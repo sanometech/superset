@@ -51,6 +51,7 @@
 
     /* Backwards Compatibility */
     "suppressImplicitAnyIndexErrors": true,
+    "ignoreDeprecations": "5.0",
 
     /* Language and Environment */
     "target": "esnext",

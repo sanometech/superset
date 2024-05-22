@@ -80,7 +80,7 @@ import { PopKPIPlugin } from '@superset-ui/plugin-chart-period-over-period-kpi';
 import { FilterPlugins } from 'src/constants';
 import TimeTableChartPlugin from '../TimeTable';
 
-import { SanomeExample } from 'src/sanome/sanome-example/src';
+import { SanomeExample } from '@superset-ui/plugin-chart-sanome';
 
 export default class MainPreset extends Preset {
   constructor() {

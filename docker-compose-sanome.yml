@@ -52,6 +52,8 @@ services:
       - 8088:8088
     depends_on: *superset-depends-on
     volumes: *superset-volumes
+    # environment:
+    #   SUPERSET_LOAD_EXAMPLES: "yes"
 
   superset-init:
     image: *superset-image
