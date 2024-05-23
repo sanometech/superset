@@ -18,6 +18,7 @@
  */
 // eslint-disable-next-line import/prefer-default-export
 export { default as SanomeExample } from './plugin';
+export { default as SanomeMemoriRiskLevelChartPlugin } from './MemoriRiskLevel';
 /**
  * Note: this file exports the default export from SanomeExample.tsx.
  * If you want to export multiple visualization modules, you will need to

@@ -80,7 +80,7 @@ import { PopKPIPlugin } from '@superset-ui/plugin-chart-period-over-period-kpi';
 import { FilterPlugins } from 'src/constants';
 import TimeTableChartPlugin from '../TimeTable';
 
-import { SanomeExample } from '@superset-ui/plugin-chart-sanome';
+import { SanomeExample, SanomeMemoriRiskLevelChartPlugin } from '@superset-ui/plugin-chart-sanome';
 
 export default class MainPreset extends Preset {
   constructor() {
@@ -170,6 +170,7 @@ export default class MainPreset extends Preset {
         new HandlebarsChartPlugin().configure({ key: 'handlebars' }),
         new EchartsBubbleChartPlugin().configure({ key: 'bubble_v2' }),
         new SanomeExample().configure({ key: 'sanome_example' }),
+        new SanomeMemoriRiskLevelChartPlugin().configure({ key: 'sanome_memori_risk_level' }),
         ...experimentalPlugins,
       ],
     });
