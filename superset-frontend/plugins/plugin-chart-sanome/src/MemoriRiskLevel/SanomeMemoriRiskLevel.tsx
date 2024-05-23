@@ -28,24 +28,24 @@ import { SanomeExampleProps, SanomeExampleStylesProps } from '../types';
 // https://github.com/apache-superset/superset-ui/blob/master/packages/superset-ui-core/src/style/index.ts
 
 const Styles = styled.div<SanomeExampleStylesProps>`
-  background-color: ${({ theme }) => theme.colors.secondary.light2};
-  padding: ${({ theme }) => theme.gridUnit * 4}px;
-  border-radius: ${({ theme }) => theme.gridUnit * 2}px;
+  padding: 0;
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
 
-  h3 {
-    /* You can use your props to control CSS! */
-    margin-top: 0;
-    margin-bottom: ${({ theme }) => theme.gridUnit * 3}px;
-    font-size: ${({ theme, headerFontSize }) => theme.typography.sizes[headerFontSize]}px;
-    font-weight: ${({ theme, boldText }) => theme.typography.weights[boldText ? 'bold' : 'normal']};
+  .score-category {
+    font-size: ${({ height }) => 0.45 * height}px;
   }
-
-  pre {
-    height: ${({ theme, headerFontSize, height }) => (
-      height - theme.gridUnit * 12 - theme.typography.sizes[headerFontSize]
-    )}px;
+  .score-category.low {
+    color: black;
+  }
+  .score-category.moderate {
+    color: #FFAE42;
+  }
+  .score-category.high {
+    color: #FC6600;
+  }
+  .score-category.critical {
+    color: red;
   }
 `;
 
@@ -73,6 +73,9 @@ export default function SanomeMemoriRiskLevel(props: SanomeExampleProps) {
 
   console.log('Plugin props', props);
 
+  const [ latestData ] = data;
+  const { score_category: scoreCategory } = latestData;
+
   // The meat of the component is below
   return (
     <Styles
@@ -82,9 +85,9 @@ export default function SanomeMemoriRiskLevel(props: SanomeExampleProps) {
       height={height}
       width={width}
     >
-      <h3>{props.headerText}</h3>
-      <h4>This is a Sanome example.</h4>
-      <pre>${JSON.stringify(data, null, 2)}</pre>
+      <h1 className={`score-category ${scoreCategory.toLowerCase()}`}>
+        {scoreCategory.toUpperCase()}
+      </h1>
     </Styles>
   );
 }
