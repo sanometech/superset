@@ -73,6 +73,7 @@ export default function SanomeMemoriRiskLevel(props: SanomeExampleProps) {
 
   console.log('Plugin props', props);
 
+  // The meat of the component is below
   return (
     <Styles
       ref={rootElem}
