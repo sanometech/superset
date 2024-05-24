@@ -18,7 +18,7 @@
  */
 import React, { useEffect, createRef } from 'react';
 import { styled } from '@superset-ui/core';
-import { SanomeExampleProps, SanomeExampleStylesProps } from './types';
+import { SanomeExampleProps, SanomeExampleStylesProps } from '../types';
 
 // The following Styles component is a <div> element, which has been styled using Emotion
 // For docs, visit https://emotion.sh/docs/styled
@@ -28,50 +28,42 @@ import { SanomeExampleProps, SanomeExampleStylesProps } from './types';
 // https://github.com/apache-superset/superset-ui/blob/master/packages/superset-ui-core/src/style/index.ts
 
 const Styles = styled.div<SanomeExampleStylesProps>`
-  background-color: ${({ theme }) => theme.colors.secondary.light2};
-  padding: ${({ theme }) => theme.gridUnit * 4}px;
-  border-radius: ${({ theme }) => theme.gridUnit * 2}px;
+  padding: 0;
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
-
-  h3 {
-    /* You can use your props to control CSS! */
-    margin-top: 0;
-    margin-bottom: ${({ theme }) => theme.gridUnit * 3}px;
-    font-size: ${({ theme, headerFontSize }) => theme.typography.sizes[headerFontSize]}px;
-    font-weight: ${({ theme, boldText }) => theme.typography.weights[boldText ? 'bold' : 'normal']};
-  }
-
-  pre {
-    height: ${({ theme, headerFontSize, height }) => (
-      height - theme.gridUnit * 12 - theme.typography.sizes[headerFontSize]
-    )}px;
-  }
 `;
 
-/**
- * ******************* WHAT YOU CAN BUILD HERE *******************
- *  In essence, a chart is given a few key ingredients to work with:
- *  * Data: provided via `props.data`
- *  * A DOM element
- *  * FormData (your controls!) provided as props by transformProps.ts
- */
+const getNextSteps = (scoreCategory: string): string[] => {
+  switch (scoreCategory.toLowerCase()) {
+    case 'low':
+      return [
+        'Low risk. No action required.'
+      ];
+    case 'moderate':
+    case 'high':
+    case 'critical':
+      return [
+        'Consider alerting a senior colleague.',
+        'Consider increasing frequency of observation.'
+      ]
+    default:
+      return ['ERROR: Unknown score category'];
+  }
+};
 
-export default function SanomeExample(props: SanomeExampleProps) {
-  // height and width are the height and width of the DOM element as it exists in the dashboard.
-  // There is also a `data` prop, which is, of course, your DATA 🎉
+export default function SanomeNextSteps(props: SanomeExampleProps) {
   const { data, height, width } = props;
-
   const rootElem = createRef<HTMLDivElement>();
-
-  // Often, you just want to access the DOM and do whatever you want.
-  // Here, you can do that with createRef, and the useEffect hook.
   useEffect(() => {
     const root = rootElem.current as HTMLElement;
     console.log('Plugin element', root);
   });
 
   console.log('Plugin props', props);
+
+  const [ latestData ] = data;
+  const { score_category: scoreCategory } = latestData;
+  const nextSteps = getNextSteps(scoreCategory);
 
   return (
     <Styles
@@ -81,8 +73,13 @@ export default function SanomeExample(props: SanomeExampleProps) {
       height={height}
       width={width}
     >
-      <h3>{props.headerText}</h3>
-      <pre>${JSON.stringify(data, null, 2)}</pre>
+      <p>Consider the following actions and carry out as appropriate:</p>
+
+      <ul>
+        {nextSteps.map((step, index) => (
+          <li key={index}>{step}</li>
+        ))}
+      </ul>
     </Styles>
   );
 }

@@ -22,7 +22,7 @@ import controlPanel from './controlPanel';
 import transformProps from './transformProps';
 import thumbnail from '../images/thumbnail.png';
 
-export default class SanomeExample extends ChartPlugin {
+export default class SanomeNextStepsChartPlugin extends ChartPlugin {
   /**
    * The constructor is used to pass relevant metadata and callbacks that get
    * registered in respective registries that are used throughout the library
@@ -35,15 +35,16 @@ export default class SanomeExample extends ChartPlugin {
    */
   constructor() {
     const metadata = new ChartMetadata({
-      description: 'A proof of concept for a custom Superset plugin',
-      name: t('SanomeExample'),
+      description: 'Display next steps advice',
+      name: t('Next Steps'),
+      tags: [t('Sanome')],
       thumbnail,
     });
 
     super({
       buildQuery,
       controlPanel,
-      loadChart: () => import('../SanomeExample'),
+      loadChart: () => import('./SanomeNextSteps'),
       metadata,
       transformProps,
     });
