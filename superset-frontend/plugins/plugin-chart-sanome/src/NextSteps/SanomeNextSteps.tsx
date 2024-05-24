@@ -44,8 +44,8 @@ const getNextSteps = (scoreCategory: string): string[] => {
     case 'critical':
       return [
         'Consider alerting a senior colleague.',
-        'Consider increasing frequency of observation.'
-      ]
+        'Consider increasing frequency of observation.',
+      ];
     default:
       return ['ERROR: Unknown score category'];
   }
