@@ -40,6 +40,9 @@ const getNextSteps = (scoreCategory: string): string[] => {
         'Low risk. No action required.'
       ];
     case 'moderate':
+      return [
+        'Moderate risk. No action required.'
+      ];
     case 'high':
     case 'critical':
       return [
