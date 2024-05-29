@@ -74,7 +74,7 @@ export default function setupFormatters(
       'DURATION_SUB',
       createDurationFormatter({ formatSubMilliseconds: true }),
     )
-    .registerValue('SANOME_MEMORI', sanomeMemoriFormatter);
+    .registerValue('SANOME_MEMORI', sanomeMemoriFormatter)
 
   getTimeFormatterRegistry()
     .registerValue('smart_date', smartDateFormatter)

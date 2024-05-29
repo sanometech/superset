@@ -73,7 +73,7 @@ export default function SanomeMemoriRiskLevel(props: SanomeExampleProps) {
 
   console.log('Plugin props', props);
 
-  const [ latestData ] = data;
+  const [latestData] = data;
   const { score_category: scoreCategory } = latestData;
 
   // The meat of the component is below
