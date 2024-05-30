@@ -18,23 +18,24 @@
  */
 import { QueryFormData, supersetTheme, TimeseriesDataRecord } from '@superset-ui/core';
 
-export interface SanomeExampleStylesProps {
+export interface SanomeStylesProps {
   height: number;
   width: number;
-  headerFontSize: keyof typeof supersetTheme.typography.sizes;
-  boldText: boolean;
+  fontSize?: number;
+  headerFontSize?: keyof typeof supersetTheme.typography.sizes;
+  boldText?: boolean;
 }
 
-interface SanomeExampleCustomizeProps {
+interface SanomeCustomizeProps {
   headerText: string;
 }
 
-export type SanomeExampleQueryFormData = QueryFormData &
-  SanomeExampleStylesProps &
-  SanomeExampleCustomizeProps;
+export type SanomeQueryFormData = QueryFormData &
+  SanomeStylesProps &
+  SanomeCustomizeProps;
 
-export type SanomeExampleProps = SanomeExampleStylesProps &
-  SanomeExampleCustomizeProps & {
+export type SanomeProps = SanomeStylesProps &
+  SanomeCustomizeProps & {
     data: TimeseriesDataRecord[];
     // add typing here for the props you pass in from transformProps.ts!
   };

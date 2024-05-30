@@ -18,7 +18,7 @@
  */
 import React, { useEffect, createRef } from 'react';
 import { styled } from '@superset-ui/core';
-import { SanomeExampleProps, SanomeExampleStylesProps } from '../types';
+import { SanomeProps, SanomeStylesProps } from '../types';
 
 // The following Styles component is a <div> element, which has been styled using Emotion
 // For docs, visit https://emotion.sh/docs/styled
@@ -27,7 +27,7 @@ import { SanomeExampleProps, SanomeExampleStylesProps } from '../types';
 // imported from @superset-ui/core. For variables available, please visit
 // https://github.com/apache-superset/superset-ui/blob/master/packages/superset-ui-core/src/style/index.ts
 
-const Styles = styled.div<SanomeExampleStylesProps>`
+const Styles = styled.div<SanomeStylesProps>`
   padding: 0;
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
@@ -54,7 +54,7 @@ const getNextSteps = (scoreCategory: string): string[] => {
   }
 };
 
-export default function SanomeNextSteps(props: SanomeExampleProps) {
+export default function SanomeNextSteps(props: SanomeProps) {
   const { data, height, width } = props;
   const rootElem = createRef<HTMLDivElement>();
   useEffect(() => {
@@ -64,8 +64,12 @@ export default function SanomeNextSteps(props: SanomeExampleProps) {
 
   console.log('Plugin props', props);
 
-  const [latestData] = data;
-  const { score_category: scoreCategory } = latestData;
+  let [{ score_category: scoreCategory }] = data;
+  if (typeof scoreCategory !== 'string') {
+    console.warn(`Unexpected value for score category: ${scoreCategory}`);
+    scoreCategory = '';
+  }
+
   const nextSteps = getNextSteps(scoreCategory);
 
   return (

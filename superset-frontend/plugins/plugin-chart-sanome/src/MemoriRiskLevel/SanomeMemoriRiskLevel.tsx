@@ -17,8 +17,8 @@
  * under the License.
  */
 import React, { useEffect, createRef } from 'react';
-import { styled } from '@superset-ui/core';
-import { SanomeExampleProps, SanomeExampleStylesProps } from '../types';
+import { computeMaxFontSize, styled } from '@superset-ui/core';
+import { SanomeProps, SanomeStylesProps } from '../types';
 
 // The following Styles component is a <div> element, which has been styled using Emotion
 // For docs, visit https://emotion.sh/docs/styled
@@ -27,13 +27,13 @@ import { SanomeExampleProps, SanomeExampleStylesProps } from '../types';
 // imported from @superset-ui/core. For variables available, please visit
 // https://github.com/apache-superset/superset-ui/blob/master/packages/superset-ui-core/src/style/index.ts
 
-const Styles = styled.div<SanomeExampleStylesProps>`
+const Styles = styled.div<SanomeStylesProps>`
   padding: 0;
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
 
   .score-category {
-    font-size: ${({ height }) => 0.45 * height}px;
+    font-size: ${({ fontSize }) => fontSize}px;
   }
   .score-category.low {
     color: black;
@@ -49,41 +49,34 @@ const Styles = styled.div<SanomeExampleStylesProps>`
   }
 `;
 
-/**
- * ******************* WHAT YOU CAN BUILD HERE *******************
- *  In essence, a chart is given a few key ingredients to work with:
- *  * Data: provided via `props.data`
- *  * A DOM element
- *  * FormData (your controls!) provided as props by transformProps.ts
- */
-
-export default function SanomeMemoriRiskLevel(props: SanomeExampleProps) {
-  // height and width are the height and width of the DOM element as it exists in the dashboard.
-  // There is also a `data` prop, which is, of course, your DATA 🎉
+export default function SanomeMemoriRiskLevel(props: SanomeProps) {
   const { data, height, width } = props;
-
   const rootElem = createRef<HTMLDivElement>();
-
-  // Often, you just want to access the DOM and do whatever you want.
-  // Here, you can do that with createRef, and the useEffect hook.
   useEffect(() => {
     const root = rootElem.current as HTMLElement;
     console.log('Plugin element', root);
   });
-
   console.log('Plugin props', props);
 
-  const [latestData] = data;
-  const { score_category: scoreCategory } = latestData;
+  let [{ score_category: scoreCategory }] = data;
+  if (typeof scoreCategory !== 'string') {
+    console.warn(`Unexpected value for score category: ${scoreCategory}`);
+    scoreCategory = '';
+  }
 
-  // The meat of the component is below
+  let fontSize = computeMaxFontSize({
+    text: scoreCategory,
+    maxWidth: width - 8,
+    maxHeight: height,
+  });
+  fontSize = fontSize > 50 ? 50 : fontSize;
+
   return (
     <Styles
       ref={rootElem}
-      boldText={props.boldText}
-      headerFontSize={props.headerFontSize}
       height={height}
       width={width}
+      fontSize={fontSize}
     >
       <h1 className={`score-category ${scoreCategory.toLowerCase()}`}>
         {scoreCategory.toUpperCase()}
