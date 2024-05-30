@@ -36,16 +36,16 @@ const Styles = styled.div<SanomeStylesProps>`
     font-size: ${({ fontSize }) => fontSize}px;
   }
   .score-category.low {
-    color: black;
+    color: #5F5F5F;
   }
   .score-category.moderate {
-    color: #FFAE42;
+    color: #F7E214;
   }
   .score-category.high {
-    color: #FC6600;
+    color: #E28C05;
   }
   .score-category.critical {
-    color: red;
+    color: #D81E05;
   }
 `;
 
