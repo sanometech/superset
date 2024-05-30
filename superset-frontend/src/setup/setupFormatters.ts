@@ -21,32 +21,14 @@ import {
   getNumberFormatter,
   getNumberFormatterRegistry,
   NumberFormats,
-  NumberFormatter,
   getTimeFormatterRegistry,
   smartDateFormatter,
   smartDateVerboseFormatter,
 } from '@superset-ui/core';
 import { FormatLocaleDefinition } from 'd3-format';
 
-const sanomeMemoriFormatter: NumberFormatter = (value: number | null | undefined): string => {
-  if (value === null || value === undefined) {
-    console.warn("sanomeMemoriFormatter: value is null or undefined");
-    return '';
-  }
-  switch (value) {
-    case 1:
-      return 'Low';
-    case 2:
-      return 'Moderate';
-    case 3:
-      return 'High';
-    case 4:
-      return 'Critical';
-    default:
-      console.warn('sanomeMemoriFormatter: value is outside expected range');
-      return '';
-  }
-};
+import { sanomeMemoriFormatter } from './sanomeFormatters';
+
 
 export default function setupFormatters(
   d3Format: Partial<FormatLocaleDefinition>,
@@ -91,8 +73,8 @@ export default function setupFormatters(
     .registerValue(
       'DURATION_SUB',
       createDurationFormatter({ formatSubMilliseconds: true }),
-    ).
-    registerValue('SANOME_MEMORI', sanomeMemoriFormatter);
+    )
+    .registerValue('SANOME_MEMORI', sanomeMemoriFormatter)
 
   getTimeFormatterRegistry()
     .registerValue('smart_date', smartDateFormatter)
