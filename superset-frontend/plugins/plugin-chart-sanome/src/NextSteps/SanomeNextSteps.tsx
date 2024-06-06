@@ -59,10 +59,9 @@ export default function SanomeNextSteps(props: SanomeProps) {
   const rootElem = createRef<HTMLDivElement>();
   useEffect(() => {
     const root = rootElem.current as HTMLElement;
-    console.log('Plugin element', root);
+    console.log('SanomeNextSteps plugin element', root);
   });
-
-  console.log('Plugin props', props);
+  console.log('SanomeNextSteps plugin props', props);
 
   let [{ score_category: scoreCategory }] = data;
   if (typeof scoreCategory !== 'string') {

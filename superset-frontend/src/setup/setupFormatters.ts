@@ -27,7 +27,7 @@ import {
 } from '@superset-ui/core';
 import { FormatLocaleDefinition } from 'd3-format';
 
-import { sanomeMemoriFormatter } from './sanomeFormatters';
+import { sanomeMemoriFormatter, sanomeLocalTimeFormatter } from './sanomeFormatters';
 
 
 export default function setupFormatters(
@@ -79,5 +79,6 @@ export default function setupFormatters(
   getTimeFormatterRegistry()
     .registerValue('smart_date', smartDateFormatter)
     .registerValue('smart_date_verbose', smartDateVerboseFormatter)
+    .registerValue('SANOME_LOCAL_TIME', sanomeLocalTimeFormatter)
     .setDefaultKey('smart_date');
 }

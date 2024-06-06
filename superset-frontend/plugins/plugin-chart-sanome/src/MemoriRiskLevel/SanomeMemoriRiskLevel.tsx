@@ -16,8 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+import { format } from 'date-fns';
 import React, { useEffect, createRef } from 'react';
 import { computeMaxFontSize, styled } from '@superset-ui/core';
+
 import { SanomeProps, SanomeStylesProps } from '../types';
 
 // The following Styles component is a <div> element, which has been styled using Emotion
@@ -34,6 +36,7 @@ const Styles = styled.div<SanomeStylesProps>`
 
   .score-category {
     font-size: ${({ fontSize }) => fontSize}px;
+    margin-bottom: 0;
   }
   .score-category.low {
     color: #5F5F5F;
@@ -47,6 +50,11 @@ const Styles = styled.div<SanomeStylesProps>`
   .score-category.critical {
     color: #D81E05;
   }
+
+  .calculated-timestamp {
+    font-size: 14px;
+    font-style: italic;
+  }
 `;
 
 export default function SanomeMemoriRiskLevel(props: SanomeProps) {
@@ -54,15 +62,31 @@ export default function SanomeMemoriRiskLevel(props: SanomeProps) {
   const rootElem = createRef<HTMLDivElement>();
   useEffect(() => {
     const root = rootElem.current as HTMLElement;
-    console.log('Plugin element', root);
+    console.log('SanomeMemoriRiskLevel plugin element', root);
   });
-  console.log('Plugin props', props);
+  console.log('SanomeMemoriRiskLevel plugin props', props);
 
-  let [{ score_category: scoreCategory }] = data;
+  let [
+    {
+      score_category: scoreCategory,
+      timestamp,
+    },
+  ] = data;
+
   if (typeof scoreCategory !== 'string') {
     console.warn(`Unexpected value for score category: ${scoreCategory}`);
     scoreCategory = '';
   }
+
+  let timestampAsDate: Date;
+  if (typeof timestamp === 'number') {
+    timestampAsDate = new Date(timestamp);
+  } else {
+    console.warn(`Unexpected value for timestamp: ${timestamp}`);
+    timestampAsDate = new Date();
+  }
+  console.log("MEMORI score calculation timestamp:", timestampAsDate)
+  const timestampString = format(timestampAsDate, 'dd MMM yyyy HH:mm');
 
   let fontSize = computeMaxFontSize({
     text: scoreCategory,
@@ -81,6 +105,7 @@ export default function SanomeMemoriRiskLevel(props: SanomeProps) {
       <h1 className={`score-category ${scoreCategory.toLowerCase()}`}>
         {scoreCategory.toUpperCase()}
       </h1>
+      <p className='calculated-timestamp'>Last updated: {timestampString}</p>
     </Styles>
   );
 }
