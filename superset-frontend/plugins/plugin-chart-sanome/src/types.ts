@@ -37,5 +37,4 @@ export type SanomeQueryFormData = QueryFormData &
 export type SanomeProps = SanomeStylesProps &
   SanomeCustomizeProps & {
     data: TimeseriesDataRecord[];
-    // add typing here for the props you pass in from transformProps.ts!
   };
